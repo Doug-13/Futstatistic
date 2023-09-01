@@ -8,7 +8,7 @@ import pandas as pd
 
 st.set_page_config(
     page_title="Estatísticas",
-    # page_icon = "",
+    page_icon = ":⚽:",
     layout="wide"
 )
 
@@ -26,3 +26,4 @@ year = st.sidebar.selectbox("Ano", years)
 st.title("Estatísticas por Campeonato")
 st.write("Página em construção")
 
+st.image('https://contajul.com/site/wp-content/uploads/retencao-na-construcao-civil.jpg ',width=440)

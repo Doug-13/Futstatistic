@@ -2,6 +2,12 @@ import pandas as pd
 import basedosdados as bd
 import streamlit as st
 
+st.set_page_config(
+    page_title="Estatísticas",
+    page_icon = ":⚽:",
+    layout="wide"
+)
+
 # Para carregar o dado direto no pandas
 if "data" not in st.session_state:
     df_data = bd.read_table(dataset_id='mundo_transfermarkt_competicoes',
@@ -20,15 +26,12 @@ if "data" not in st.session_state:
 
 
 st.sidebar.markdown('''
-# Sections
+# Me siga lá!!
 - [Linkedin](https://www.linkedin.com/in/douglas-mello-13b70012a/)
 - [Github](https://github.com/Doug-13)
 ''', unsafe_allow_html=True)
 
-
-
 col1, col2, col3 = st.columns(3)    
-# foto = 'https://avatars.githubusercontent.com/u/87047259?v=4'
 with col1:
     st.image('https://media.licdn.com/dms/image/D4D03AQHfCsdexLdO0A/profile-displayphoto-shrink_100_100/0/1682550966648?e=1698883200&v=beta&t=vy3Qm5QmRQIh-Llg2EE6vm4ouRJMr-24VoJ18zi5jg8', width=140)
 with col2:

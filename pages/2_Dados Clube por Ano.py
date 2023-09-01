@@ -9,7 +9,7 @@ from PIL import Image
 
 st.set_page_config(
     page_title="Estatísticas",
-    # page_icon = "",
+    page_icon = ":⚽:",
     layout="wide"
 )
 
@@ -504,7 +504,7 @@ df_contagem_Card_ordenada = pd.DataFrame(
 ####################### Criar gráfico   #######################
 def plot_evolucao_posicao(df_data, club, year, colorLine):
     if year <= 2006:
-        return 'Dados indisponíveis'
+        return '❗❗❗❗❗❗  Dados indisponíveis  ❗❗❗❗❗❗❗❗'
     
     df_posRod = df_data[(df_data["time_man"] == club) &
                         (df_data["ano_campeonato"] == year)]
@@ -626,7 +626,7 @@ try:
                      }, height=300, width=400,
                      hide_index=True)
 except:
-    st.write("Dados disponíveis apenas entre os anos de 2014-2022")
+    st.write("❗❗❗❗❗❗❗ Dados disponíveis apenas entre os anos de 2014-2022 ❗❗❗❗❗❗❗")
 
 st.divider()
 
@@ -665,4 +665,4 @@ try:
                 }, height=740, width=900,
                 hide_index=True)
 except:
-    st.write("Dados ainda não disponíveis")
+    st.write("❗❗❗❗❗❗❗  Dados ainda não disponíveis  ❗❗❗❗❗❗")
