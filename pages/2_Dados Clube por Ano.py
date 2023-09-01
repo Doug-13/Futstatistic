@@ -662,7 +662,7 @@ try:
                     min_value=0,
                     max_value=int(resulting_table_games['Pontos'].max())
                 ),
-                }, height=890, width=900,
+                }, height=740, width=900,
                 hide_index=True)
 except:
     st.write("Dados ainda não disponíveis")
