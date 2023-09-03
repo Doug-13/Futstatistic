@@ -238,7 +238,7 @@ def get_club_color(club):
     return color_mapping.get(club)
 
 ################## Apresentar tabela com os confrontos realizados por campeonato ############################
-################## Melhorar esta parte de código ###########
+
 
 #################  Selecionar campeonatos por ano #################
 
@@ -282,37 +282,38 @@ def create_match_table(df_data, year, club):
         df_pos['data'] = pd.to_datetime(df_pos['data'])
         
         df_tabela = df_pos[columns]
+
+        df_tabela["mandante_Placar"] = df_pos["mandante_Placar"].astype('int64')
+        df_tabela["visitante_Placar"] = df_pos["visitante_Placar"].astype('int64')
+        
         df_tabela.loc[:,"Placar"] = df_pos["mandante"] + " " + df_pos["mandante_Placar"].astype(str) + " x " + df_pos["visitante_Placar"].astype(str) + " " + df_pos["visitante"]
         df_tabela.loc[:,"data"] = df_tabela["data"].dt.strftime('%d/%m')
         df_tabela.loc[:,"Logo_man"] = df_tabela["mandante"].apply(get_club_logo)  # Usando a coluna 'mandante' ao invés de 'time_man'
-        df_tabela.loc[:,"Logo_vis"] = df_tabela["time_vis"].apply(get_club_logo) # Usando a coluna 'visitante' ao invés de 'time_vis'
+        df_tabela.loc[:,"Logo_vis"] = df_tabela["visitante"].apply(get_club_logo) # Usando a coluna 'visitante' ao invés de 'time_vis'
         
         # Selecionando e renomeando colunas para a tabela final
-        df_tab = df_tabela[["data", "rodata", "Logo_man", "Placar", "Logo_vis"]]
+        df_tab = df_tabela[["data", "rodata", "Logo_man", "Placar", "Logo_vis"]].copy()
         df_tab.rename(columns={"data": "Data do Jogo", "rodata": "Rodada", "Logo_man": "Escudo Mandante", "Logo_vis": "Escudo Visitante"}, inplace=True)
    
     else:
         df_pos = df_data[(df_data["ano_campeonato"] == year) & (
             (df_data["time_man"] == club) | (df_data["time_vis"] == club))]
 
-        df_pos = df_pos.sort_values(by='rodada')
+        df_pos = df_pos.sort_values(by='rodada').copy()
         columns = ["data", "rodada", "publico", "time_man", "time_vis"]
         df_pos['data'] = pd.to_datetime(df_pos['data'])
 
         df_tabela = df_pos[columns]
-        #   df_tabela.loc[:, "Placar"] = df_pos["time_man"] + " " + df_pos["gols_man"].astype(str)+ " x " + df_pos["gols_vis"].astype(str) + " " + df_pos["time_vis"]
-        df_tabela.loc[:, "Placar"] = (df_pos["time_man"] + " " + df_pos["gols_man"].astype(str) + " x " +  df_pos["gols_vis"].astype(str) + " " + df_pos["time_vis"])
-        
-        df_tabela.loc[:,"data"] = df_tabela["data"].dt.strftime('%d/%m')
 
+        df_tabela.loc[:, "Placar"] = (df_pos["time_man"] + " " + df_pos["gols_man"].astype(float).fillna(0).astype('int64').astype(str) + " x " +  df_pos["gols_vis"].astype(float).fillna(0).astype('int64').astype(str) + " " + df_pos["time_vis"])
+        df_tabela.loc[:,"data"] = df_tabela["data"].dt.strftime('%d/%m')
         df_tabela.loc[:,"Logo_man"] = df_tabela["time_man"].apply(get_club_logo)
         df_tabela.loc[:,"Logo_vis"] = df_tabela["time_vis"].apply(get_club_logo)
 
         # Select and rename columns for the final table
         df_tab = df_tabela[["data", "rodada",
                             "Logo_man", "Placar", "Logo_vis", "publico"]]
-        df_tab.rename(columns={"data": "Data do Jogo", "rodada": "Rodada", "Logo_man": "Escudo Mandante",
-                    "Logo_vis": "Escudo Visitante", "publico": "Público"}, inplace=True)
+        df_tab.rename(columns={"data": "Data do Jogo", "rodada": "Rodada", "Logo_man": "Escudo Mandante", "Logo_vis": "Escudo Visitante", "publico": "Público"}, inplace=True)
 
     return df_tab  # Retorna o DataFrame df_tabela
 
@@ -338,9 +339,11 @@ club_location_vis = df_year[(df_year["rodada"] == ultRod) & (
 
 # Verificar se o clube estava como time mandante ou visitante e obter a colocação correspondente
 if not club_location_man.empty:
-    club_location = club_location_man.values[0]
+    value = club_location_man.values[0]
+    club_location = str(int(value)) if not pd.isna(value) else "N/A"
 elif not club_location_vis.empty:
-    club_location = club_location_vis.values[0]
+    value = club_location_vis.values[0]
+    club_location = str(int(value)) if not pd.isna(value) else "N/A"
 else:
     club_location = "N/A"
 
@@ -395,9 +398,9 @@ def create_data_gols(df_data, club, year):
     gols_do_man = df_clubVis['gols_man'].sum()
 
     # Calculando o total de jogos em que o clube marcou gols como mandante e visitante
-    total_gols = gols_man + gols_vis
-    total_gols_sofridos = gols_do_man + gols_do_vis
-    saldo = total_gols - total_gols_sofridos
+    total_gols = int(gols_man + gols_vis)
+    total_gols_sofridos = int(gols_do_man + gols_do_vis)
+    saldo =int( total_gols - total_gols_sofridos)
 
     # Criar DF com os dados e ordenar por rodada
     df_pos = df_data[df_data["ano_campeonato"] == year]
@@ -512,15 +515,19 @@ def plot_evolucao_posicao(df_data, club, year, colorLine):
     df_posVis = df_data[(df_data["time_vis"] == club) &
                         (df_data["ano_campeonato"] == year)]
 
+    
     df_new = pd.concat([
         df_posRod[['rodada', 'colocacao_man']].rename(
             columns={'colocacao_man': 'posicao'}),
         df_posVis[['rodada', 'colocacao_vis']].rename(
             columns={'colocacao_vis': 'posicao'})
+        
     ])
-
+    df_new["posicao"] = df_new["posicao"].astype(float).fillna(0).astype('int64')
+    
     df_new = df_new.sort_values('rodada').reset_index(drop=True)
 
+        
     if df_new.empty:
         return 'Dados indisponíveis para o gráfico'
 
@@ -543,10 +550,10 @@ def plot_evolucao_posicao(df_data, club, year, colorLine):
     # Inserir rótulo de dados
     for index, row in df_new.iterrows():
         plt.text(row['rodada'], row['posicao'], str(
-            row['posicao']), ha='center', va='bottom', fontsize=6)
+            row['posicao']), ha='center', va='bottom', fontsize=8)
     # Remover bordas do gráfico
     plt.axis('off')
-    plt.grid(True)
+    plt.grid(True)  
     
     return plt
 
