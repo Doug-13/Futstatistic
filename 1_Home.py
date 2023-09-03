@@ -15,7 +15,7 @@ if "data" not in st.session_state:
     # billing_project_id="projfutebol")
     # st.session_state["data"] = df_databigquery
 
-    df_data = pd.read_csv('Arquivos\\DF - Big query.csv', sep=',')
+    df_data = pd.read_csv('Arquivos\\df_Big_query.csv', sep=',')
     st.session_state["data"] = df_data
 
     df_brasFul = pd.read_csv('Arquivos\campeonato-brasileiro-full.csv')
