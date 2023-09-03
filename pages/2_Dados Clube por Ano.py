@@ -1,11 +1,8 @@
 import streamlit as st
 import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 import pandas as pd
 
-
-# Importar funções
-# from ..utilitarios.funct import get_club_logo
-# from ..utilitarios.funct import get_club_color
 
 st.set_page_config(
     page_title="Estatísticas",
@@ -18,15 +15,21 @@ df_brasGols = st.session_state["dataBrasGols"]
 df_brasFul = st.session_state["dataBrasFull"]
 df_brasCards = st.session_state["dataBrasCards"]
 
+col1, col2 = st.columns(2)
+with col1:
+    # Criar caixa de seleção de Ano
+    years = sorted(df_data["ano_campeonato"].value_counts().index, reverse=True)
+    year = st.selectbox("Ano", years)
+with col2:
+   # Criar caixa de seleção de Clubes
+    clubs = df_data[df_data["ano_campeonato"] == year]
+    clubs = sorted(clubs["time_man"].value_counts().index)
+    club = st.selectbox("Time", clubs)
 
-# Criar caixa de seleção de Ano
-years = sorted(df_data["ano_campeonato"].value_counts().index, reverse=True)
-year = st.sidebar.selectbox("Ano", years)
+st.divider()
 
-# Criar caixa de seleção de Clubes
-clubs = df_data[df_data["ano_campeonato"] == year]
-clubs = sorted(clubs["time_man"].value_counts().index)
-club = st.sidebar.selectbox("Time", clubs)
+
+
 
 ################## Buscar escudo do clube ##################
 
