@@ -15,16 +15,16 @@ if "data" not in st.session_state:
     # billing_project_id="projfutebol")
     # st.session_state["data"] = df_databigquery
 
-    df_brasFul = pd.read_csv(r'campeonato-brasileiro-full.csv')
+    df_brasFul = pd.read_csv('pages\campeonato-brasileiro-full.csv')
     st.session_state["dataBrasFull"] = df_brasFul
 
-    df_brasGols = pd.read_csv('campeonato-brasileiro-gols.csv')
+    df_brasGols = pd.read_csv('pages\campeonato-brasileiro-gols.csv')
     st.session_state["dataBrasGols"] = df_brasGols
 
-    df_data = pd.read_csv('df_Big_query.csv')
+    df_data = pd.read_csv('pages\df_Big_query.csv')
     st.session_state["data"] = df_data
 
-    df_brasCards = pd.read_csv('campeonato-brasileiro-cartoes.csv')
+    df_brasCards = pd.read_csv('pages\campeonato-brasileiro-cartoes.csv')
     st.session_state["dataBrasCards"] = df_brasCards
 
 st.sidebar.markdown('''
