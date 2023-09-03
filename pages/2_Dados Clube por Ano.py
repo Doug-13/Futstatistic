@@ -1,7 +1,7 @@
 import streamlit as st
 import matplotlib.pyplot as plt
 import pandas as pd
-from PIL import Image
+
 
 # Importar funções
 # from ..utilitarios.funct import get_club_logo
