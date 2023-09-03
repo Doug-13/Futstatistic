@@ -282,10 +282,10 @@ def create_match_table(df_data, year, club):
         df_pos['data'] = pd.to_datetime(df_pos['data'])
         
         df_tabela = df_pos[columns]
-        df_tabela["Placar"] = df_pos["mandante"] + " " + df_pos["mandante_Placar"].astype(str) + " x " + df_pos["visitante_Placar"].astype(str) + " " + df_pos["visitante"]
-        df_tabela["data"] = df_tabela["data"].dt.strftime('%d/%m')
-        df_tabela["Logo_man"] = df_tabela["mandante"].apply(get_club_logo)  # Usando a coluna 'mandante' ao invés de 'time_man'
-        df_tabela["Logo_vis"] = df_tabela["visitante"].apply(get_club_logo)  # Usando a coluna 'visitante' ao invés de 'time_vis'
+        df_tabela.loc[:,"Placar"] = df_pos["mandante"] + " " + df_pos["mandante_Placar"].astype(str) + " x " + df_pos["visitante_Placar"].astype(str) + " " + df_pos["visitante"]
+        df_tabela.loc[:,"data"] = df_tabela["data"].dt.strftime('%d/%m')
+        df_tabela.loc[:,"Logo_man"] = df_tabela["mandante"].apply(get_club_logo)  # Usando a coluna 'mandante' ao invés de 'time_man'
+        df_tabela.loc[:,"Logo_vis"] = df_tabela["time_vis"].apply(get_club_logo) # Usando a coluna 'visitante' ao invés de 'time_vis'
         
         # Selecionando e renomeando colunas para a tabela final
         df_tab = df_tabela[["data", "rodata", "Logo_man", "Placar", "Logo_vis"]]
@@ -300,12 +300,13 @@ def create_match_table(df_data, year, club):
         df_pos['data'] = pd.to_datetime(df_pos['data'])
 
         df_tabela = df_pos[columns]
-        df_tabela["Placar"] = df_pos["time_man"] + " " + df_pos["gols_man"].astype(
-            str) + " x " + df_pos["gols_vis"].astype(str) + " " + df_pos["time_vis"]
-        df_tabela["data"] = df_tabela["data"].dt.strftime('%d/%m')
+        #   df_tabela.loc[:, "Placar"] = df_pos["time_man"] + " " + df_pos["gols_man"].astype(str)+ " x " + df_pos["gols_vis"].astype(str) + " " + df_pos["time_vis"]
+        df_tabela.loc[:, "Placar"] = (df_pos["time_man"] + " " + df_pos["gols_man"].astype(str) + " x " +  df_pos["gols_vis"].astype(str) + " " + df_pos["time_vis"])
+        
+        df_tabela.loc[:,"data"] = df_tabela["data"].dt.strftime('%d/%m')
 
-        df_tabela["Logo_man"] = df_tabela["time_man"].apply(get_club_logo)
-        df_tabela["Logo_vis"] = df_tabela["time_vis"].apply(get_club_logo)
+        df_tabela.loc[:,"Logo_man"] = df_tabela["time_man"].apply(get_club_logo)
+        df_tabela.loc[:,"Logo_vis"] = df_tabela["time_vis"].apply(get_club_logo)
 
         # Select and rename columns for the final table
         df_tab = df_tabela[["data", "rodada",
@@ -424,10 +425,9 @@ def create_create_table(df_data, year):
         victories, empates, derrotas = create_cont_results(df_data, year, club)
         total_gols, total_gols_sofridos, saldo = create_data_gols(df_data, club, year)
         pontos = (victories * 3) + empates  # Calcula os pontos corretamente
-        df_table_games = df_table_games.append({"Clube": club, "Pontos": pontos,
-                                                "Vitórias": victories, "Empates": empates, "Derrotas": derrotas, "Gols Marcados": total_gols,
-                                                "Gols Sofridos": total_gols_sofridos, "Saldo": saldo}, ignore_index=True)
-
+        new_Header = {"Clube": club, "Pontos": pontos, "Vitórias": victories, "Empates": empates, "Derrotas": derrotas, "Gols Marcados": total_gols,
+                    "Gols Sofridos": total_gols_sofridos, "Saldo": saldo}
+        df_table_games = pd.concat([df_table_games, pd.DataFrame([new_Header])], ignore_index=True)
     # Ordena o DataFrame por pontos de forma decrescente
     df_table_games = df_table_games.sort_values(by=["Pontos", "Vitórias", "Saldo"], ascending=[False, False, False])
     # Adiciona a coluna de sequência numérica
@@ -478,7 +478,8 @@ df_contagem_ordenada = pd.DataFrame(
 #################  Contagem de cartões por ano #################
 filtered_df = df_brasCards[(df_brasCards['partida_id'] >= (
     min_id)) & (df_brasCards['partida_id'] <= (max_id))]
-filtered_df = filtered_df[(df_brasCards['clube']) == clubGols]
+filtered_df = filtered_df[filtered_df['clube'] == clubGols].reset_index(drop=True)
+
 
 # Criar um dicionário para armazenar a contagem de jogadores
 jogadores_contagem = {}

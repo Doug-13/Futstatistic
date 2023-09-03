@@ -1,5 +1,5 @@
 import pandas as pd
-import basedosdados as bd
+# import basedosdados as bd
 import streamlit as st
 
 st.set_page_config(
@@ -10,9 +10,12 @@ st.set_page_config(
 
 # Para carregar o dado direto no pandas
 if "data" not in st.session_state:
-    df_data = bd.read_table(dataset_id='mundo_transfermarkt_competicoes',
-    table_id='brasileirao_serie_a',
-    billing_project_id="projfutebol")
+    # df_databigquery = bd.read_table(dataset_id='mundo_transfermarkt_competicoes',
+    # table_id='brasileirao_serie_a',
+    # billing_project_id="projfutebol")
+    # st.session_state["data"] = df_databigquery
+
+    df_data = pd.read_csv('Arquivos\DF - Big query.csv')
     st.session_state["data"] = df_data
 
     df_brasFul = pd.read_csv('Arquivos\campeonato-brasileiro-full.csv')
@@ -23,7 +26,6 @@ if "data" not in st.session_state:
 
     df_brasCards = pd.read_csv('Arquivos\campeonato-brasileiro-cartoes.csv')
     st.session_state["dataBrasCards"] = df_brasCards
-
 
 st.sidebar.markdown('''
 # Me siga lá!!
