@@ -17,7 +17,7 @@ if "data" not in st.session_state:
     # billing_project_id="projfutebol")
     # st.session_state["data"] = df_databigquery
 
-    df_brasFul = pd.read_csv('https://github.com/Doug-13/Futstatistic/blob/main/pages/campeonato-brasileiro-full.csv')
+    df_brasFul = pd.read_csv('pages/campeonato-brasileiro-full.csv')
     st.session_state["dataBrasFull"] = df_brasFul
 
     df_brasGols = pd.read_csv('pages\campeonato-brasileiro-gols.csv')
