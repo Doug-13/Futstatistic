@@ -42,7 +42,7 @@ with col2:
     st.header('Sobre mim')
 st.write('''
 Olá, feliz por você estar aqui conhecendo este projeto, meu nome é Douglas, sou apaixonado por programação e análise de dados, 
-        sou inquieto e sempre procurando aprender algo novo, gostou, manda dicas aí para aperfeiçoarmos este trabalho! ''')
+        sou inquieto e sempre procurando aprender algo novo, gostou? Mande dicas para aperfeiçoarmos este trabalho! ''')
 st.write('''Me segue lá no [Linkedin](https://www.linkedin.com/in/douglas-mello-13b70012a/), e me fala o que achou do projeto, ainda está um pouco bagunçado, mas vai melhorar...''')
 st.write(''' Ahhhhh e divulga aí, me ajuda a fazer com que este projeto chegue mais longe!!''')
 
