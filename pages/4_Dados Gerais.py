@@ -160,7 +160,7 @@ styled_df = df_table_positions.style.applymap(lambda club: highlight_club(club, 
 # Função para destacar o clube selecionado
 def highlight_club(club, selected_club):
     if club == selected_club:
-        return "background-color: rgb(238, 235, 56)"
+        return "background-color: rgb(174, 173, 72); color: rgb(39, 39, 43);"
     else:
         return ""
 
