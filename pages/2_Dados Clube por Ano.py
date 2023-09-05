@@ -26,10 +26,6 @@ with col2:
     clubs = sorted(clubs["time_man"].value_counts().index)
     club = st.selectbox("Time", clubs)
 
-st.divider()
-
-
-
 
 ################## Buscar escudo do clube ##################
 
@@ -197,7 +193,6 @@ def get_club_color(club):
         'Guarani': "green",
         'Juventude': "green",
         'Palmeiras': "green",
-        
         'América-RN': "red",
         'Athletico-PR': "red",
         'Atlético-GO': "red",
@@ -213,7 +208,6 @@ def get_club_color(club):
         'Santa Cruz': "red",
         'Sport Recife': "red",
         'São Paulo': "red",
-        
         'Atlético-MG': "black",
         'Botafogo': "black",
         'Ceará SC': "black",
@@ -223,7 +217,6 @@ def get_club_color(club):
         'Santos': "black",
         'Santos FC': "black",
         'Vasco da Gama': "black",
-        
         'Avaí FC': "blue",
         'Barueri': "blue",
         'CSA': "blue",
@@ -234,11 +227,10 @@ def get_club_color(club):
         'Ipatinga FC': "blue",
         'Paysandu SC': "blue",
         'São Caetano': "blue",
-        
         'Brasiliense-DF': "yellow",
         'Criciúma EC': "yellow"
     }
-    return color_mapping.get(club)
+    return color_mapping.get(club,"black")
 
 ################## Apresentar tabela com os confrontos realizados por campeonato ############################
 
@@ -445,8 +437,29 @@ def create_create_table(df_data, year):
 # Chama a função para criar a tabela
 resulting_table_games = create_create_table(df_data, year)
 
-# Exibe a tabela resultante
-print(resulting_table_games)
+
+
+first = resulting_table_games.iloc[0]["Clube"]
+second = resulting_table_games.iloc[1]["Clube"]
+
+last_4_clubs = resulting_table_games.tail(4)
+
+# Extract the "Clube" column values for the last 4 clubs
+rebaixados = last_4_clubs["Clube"].tolist()
+
+# Colorir data frame
+def highlight_rows(s):
+    styles = []
+    for i in range(len(s)):
+        if i < 6:
+            styles.append('background-color: lightgreen')
+        elif i >= len(s) - 4:
+            styles.append('background-color: rgba(243, 9, 9, 0.3)')
+        else:
+            styles.append('')
+    return styles
+
+styled_resulting_table_games = resulting_table_games.style.apply(highlight_rows)
 
 
 
@@ -610,7 +623,7 @@ st.divider()
 try:
     col1, col2 = st.columns(2)
     with col1:
-        st.write(f"**Artilheiros do clube**")
+        st.write(f"**Artilheiros do Campeonato**")
         st.dataframe(df_contagem_ordenada,
                      column_config={"Gols": st.column_config.ProgressColumn(
                          "Gols marcados",
@@ -665,7 +678,7 @@ st.divider()
 ######### Plotagem da tabela final do campeonato #######
 st.markdown(f"**Tabela do campeonato** ")
 try:
-    st.dataframe(resulting_table_games,
+    st.dataframe(styled_resulting_table_games,
                 column_config={"Pontos": st.column_config.ProgressColumn(
                     "Progresso Campeonato",
                     help="Progresso Campeonato brasileiro",
