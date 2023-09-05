@@ -29,6 +29,9 @@ if "data" not in st.session_state:
     df_brasCards = pd.read_csv('pages/campeonato-brasileiro-cartoes.csv')
     st.session_state["dataBrasCards"] = df_brasCards
 
+    df_brasPosition = pd.read_csv('pages/pirmeiros_colocados.csv')
+    st.session_state["df_brasPosition"] = df_brasPosition
+
 st.sidebar.markdown('''
 # Me siga lá!!
 - [Linkedin](https://www.linkedin.com/in/douglas-mello-13b70012a/)

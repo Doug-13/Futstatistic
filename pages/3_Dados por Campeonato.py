@@ -23,15 +23,8 @@ with col1:
 with col2:
     st.markdown("<h1 style='text-align: center;'>Campeonato Brasileiro</h1>", unsafe_allow_html=True)
 
-
 years = sorted(df_data["ano_campeonato"].value_counts().index, reverse=True)
 year = st.selectbox("Escolha o Ano", years)
-
-
-# st.title("Dados por Campeonato")
-# st.write("Página em construção")
-
-# st.image('https://contajul.com/site/wp-content/uploads/retencao-na-construcao-civil.jpg ',width=440)
 
 def create_cont_results_general(df_data, year):
     df_clubMan = df_data[
@@ -254,7 +247,7 @@ def highlight_rows(s):
     styles = []
     for i in range(len(s)):
         if i < 6:
-            styles.append('background-color: lightgreen')
+            styles.append('background-color: rgba(93, 178, 48, 0.3);')
         elif i >= len(s) - 4:
             styles.append('background-color: rgba(243, 9, 9, 0.3)')
         else:
@@ -296,7 +289,7 @@ st.divider()
 try:
     col1, col2 = st.columns(2)
     with col1:
-        st.write(f"**Artilheiros do clube**")
+        st.write(f"**Artilheiros do campeonato**")
         st.dataframe(df_contagem_ordenada,
                      column_config={"Gols": st.column_config.ProgressColumn(
                          "Gols marcados",

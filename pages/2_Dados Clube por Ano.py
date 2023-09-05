@@ -452,7 +452,7 @@ def highlight_rows(s):
     styles = []
     for i in range(len(s)):
         if i < 6:
-            styles.append('background-color: lightgreen')
+            styles.append('background-color:  rgba(93, 178, 48, 0.3);')
         elif i >= len(s) - 4:
             styles.append('background-color: rgba(243, 9, 9, 0.3)')
         else:
