@@ -38,10 +38,13 @@ def create_cont_results_general(df_data, year):
     
     # total de gols marcados
     gols_marc = (df_clubMan["gols_man"].sum()) + (df_clubMan["gols_vis"].sum())
+    gols_marc = str(int(gols_marc))
     # gols mandantes
     gols_man = (df_clubMan["gols_man"].sum())
+    gols_man= str(int(gols_man))
     # gols visitantes
     gols_vis = (df_clubMan["gols_vis"].sum()) 
+    gols_vis= str(int(gols_vis))
 
     empat = len(df_clubMan[df_clubMan["gols_man"] == df_clubMan["gols_vis"]])
     
@@ -278,7 +281,7 @@ with st.container():
 
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.write(f"**Tota de Gols Marcados:** {gols_marc} ") 
+        st.write(f"**Total de Gols Marcados:** {gols_marc} ") 
     with col2:
         st.write(f"**Gols Mandantes:** {gols_man} ")
     with col3:
