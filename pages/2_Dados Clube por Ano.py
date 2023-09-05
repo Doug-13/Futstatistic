@@ -264,6 +264,26 @@ def localId(df_brasFul,year):
 
 max_id, min_id = localId(df_brasFul,year)
 
+#########   Estádio e média de público  ##################
+
+def estadios_clube_ano(df_data, year, club):
+    # Filtra o DataFrame com base no ano do campeonato e no clube
+    filtered_df = df_data[(df_data['ano_campeonato'] == year) & (df_data['time_man'] == club)]
+    
+    # Remove espaços em branco no início e no final da coluna 'estadio'
+    filtered_df['estadio'] = filtered_df['estadio'].str.strip()
+    
+    # Obtém uma lista dos estádios únicos em que o clube jogou
+    estadios = filtered_df['estadio'].unique()
+    
+    return estadios
+
+# Chama a função para obter a lista de estádios
+estadios = estadios_clube_ano(df_data, year, club)
+estadios_str = ', '.join(estadios)
+
+# Imprime a lista de estádios
+
 ############# Criar tabela com os jogos com condicional para abaixo de 2006 ###################
 
 def create_match_table(df_data, year, club):
@@ -437,8 +457,6 @@ def create_create_table(df_data, year):
 # Chama a função para criar a tabela
 resulting_table_games = create_create_table(df_data, year)
 
-
-
 first = resulting_table_games.iloc[0]["Clube"]
 second = resulting_table_games.iloc[1]["Clube"]
 
@@ -598,6 +616,9 @@ with col2:
     st.markdown(f"**Brasileirão** {year}")
 
 
+
+
+
 ######### Colunas de vitórias, Empates e derrotas  ##################
 col1, col2, col3 = st.columns(3)
 with col1:
@@ -616,9 +637,9 @@ with col2:
 with col3:
     st.markdown(f'**Saldo:** {saldo}')
 
+st.write(f"**Estádios:** {estadios_str}")
+
 st.divider()
-
-
 ######### Tabela de Artilheiros do clube #######
 try:
     col1, col2 = st.columns(2)
