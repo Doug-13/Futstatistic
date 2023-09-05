@@ -316,6 +316,7 @@ def create_match_table(df_data, year, club):
 
         df_pos = df_pos.sort_values(by='rodada').copy()
         columns = ["data", "rodada", "publico", "time_man", "time_vis"]
+        
         df_pos['data'] = pd.to_datetime(df_pos['data'])
 
         df_tabela = df_pos[columns]
@@ -324,12 +325,14 @@ def create_match_table(df_data, year, club):
         df_tabela.loc[:,"data"] = df_tabela["data"].dt.strftime('%d/%m')
         df_tabela.loc[:,"Logo_man"] = df_tabela["time_man"].apply(get_club_logo)
         df_tabela.loc[:,"Logo_vis"] = df_tabela["time_vis"].apply(get_club_logo)
+        df_tabela.loc[:,"publico"] = df_tabela["publico"].astype(int).astype(str)
 
         # Select and rename columns for the final table
         df_tab = df_tabela[["data", "rodada",
                             "Logo_man", "Placar", "Logo_vis", "publico"]]
+        
         df_tab.rename(columns={"data": "Data do Jogo", "rodada": "Rodada", "Logo_man": "Escudo Mandante", "Logo_vis": "Escudo Visitante", "publico": "Público"}, inplace=True)
-
+    
     return df_tab  # Retorna o DataFrame df_tabela
 
 # Chama a função create_match_table e atribui o resultado a df_tab
