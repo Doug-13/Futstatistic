@@ -22,7 +22,7 @@ with col1:
     st.image(logo, width=90)
 with col2:
     st.markdown("<h1 style='text-align: center;'>Campeonato Brasileiro</h1>", unsafe_allow_html=True)
-
+   
 
 
 # Funções para gerar tabelas de primeiros lugares por ano!
@@ -182,12 +182,70 @@ resultado_df.columns = resultado_df.iloc[0]  # Usar a primeira linha como nomes 
 resultado_df = resultado_df[1:]
 
 
+
+######   Front   #########
+
 st.dataframe(resultado_df, height=30, width=900, hide_index=True)
 
 st.dataframe(styled_df, height=740, width=900, hide_index=True)
 
-# st.dataframe(clubs_positions, height=740, width=900, hide_index=True)
 
+def df_table_games(df_data):    
+    # Cria um DataFrame vazio com as colunas desejadas
+    df_table_games = pd.DataFrame(columns=[
+        "Clube", "Pontos", "Vitórias", "Empates", "Derrotas", "Gols Marcados", "Gols Sofridos", "Saldo"])
+
+    # Agrupa os dados pelo clube mandante
+    club_man_data = df_data.groupby("time_man")
+
+    # Agrupa os dados pelo clube visitante
+    club_vis_data = df_data.groupby("time_vis")
+
+    # Encontra todos os clubes únicos
+    clubs = set(df_data["time_man"].unique()) | set(df_data["time_vis"].unique())
+
+    for club in clubs:
+        # Obtém os dados para o clube mandante
+        club_man_matches = club_man_data.get_group(club) if club in club_man_data.groups else pd.DataFrame()
+
+        # Obtém os dados para o clube visitante
+        club_vis_matches = club_vis_data.get_group(club) if club in club_vis_data.groups else pd.DataFrame()
+
+        # Calcula as estatísticas
+        victories = len(club_man_matches[club_man_matches["gols_man"] > club_man_matches["gols_vis"]]) + len(club_vis_matches[club_vis_matches["gols_vis"] > club_vis_matches["gols_man"]])
+        empates = len(club_man_matches[club_man_matches["gols_man"] == club_man_matches["gols_vis"]]) + len(club_vis_matches[club_vis_matches["gols_vis"] == club_vis_matches["gols_man"]])
+        derrotas = len(club_man_matches[club_man_matches["gols_man"] < club_man_matches["gols_vis"]]) + len(club_vis_matches[club_vis_matches["gols_vis"] < club_vis_matches["gols_man"]])
+        
+        total_gols_man = club_man_matches["gols_man"].sum() + club_vis_matches["gols_vis"].sum()
+        total_gols_vis = club_man_matches["gols_vis"].sum() + club_vis_matches["gols_man"].sum()
+        total_gols_sofridos = total_gols_man - total_gols_vis
+        saldo = total_gols_man - total_gols_sofridos
+        
+        pontos = (victories * 3) + empates  # Calcula os pontos
+        
+        # Adiciona os dados à tabela
+        df_table_games = df_table_games.append({"Clube": club, "Pontos": str(int(pontos)), "Vitórias": victories, "Empates": empates, "Derrotas": derrotas, "Gols Marcados": total_gols_man,
+                                                "Gols Sofridos": total_gols_sofridos, "Saldo": saldo}, ignore_index=True)
+        df_table_games['Pontos'] = df_table_games['Pontos'].str.replace(',', '.', regex=True)
     
+    # Ordena o DataFrame por pontos de forma decrescente
+    df_table_games = df_table_games.sort_values(by=["Pontos", "Vitórias", "Saldo"], ascending=[False, False, False])
+    # Adiciona a coluna de sequência numérica
+    df_table_games.insert(0, "Sequência", range(1, len(df_table_games) + 1))
+    df_table_games['Pontos'] = df_table_games['Pontos'].str.replace(',', '.', regex=True)
 
+    return df_table_games
+# Chama a função para criar a tabela
+resulting_table_games = df_table_games(df_data)
 
+st.dataframe(resulting_table_games,
+                     column_config={"Ranking Brasileirão": st.column_config.ProgressColumn(
+                         "Pontos",
+                         help="Número de cartões recebidos por jogador",
+                         format="%d",
+                         min_value=0,
+                         max_value=int(
+                             resulting_table_games  ['Pontos'].max())
+                     ),
+                     }, height=800, width=800,
+                     hide_index=True)

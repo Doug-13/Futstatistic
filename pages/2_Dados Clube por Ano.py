@@ -15,16 +15,30 @@ df_brasGols = st.session_state["dataBrasGols"]
 df_brasFul = st.session_state["dataBrasFull"]
 df_brasCards = st.session_state["dataBrasCards"]
 
+
 col1, col2 = st.columns(2)
 with col1:
-    # Criar caixa de seleção de Ano
-    years = sorted(df_data["ano_campeonato"].value_counts().index, reverse=True)
-    year = st.selectbox("Ano", years)
-with col2:
    # Criar caixa de seleção de Clubes
-    clubs = df_data[df_data["ano_campeonato"] == year]
-    clubs = sorted(clubs["time_man"].value_counts().index)
-    club = st.selectbox("Time", clubs)
+    clubs = sorted(df_data["time_man"].value_counts().index)
+    club = st.selectbox("Clube", clubs)
+
+with col2:
+    # Criar caixa de seleção de Ano
+    years = df_data[df_data["time_man"] == club]
+    years = sorted(years["ano_campeonato"].unique(), reverse=True)
+    year = st.selectbox("Ano", years)
+
+
+# col1, col2 = st.columns(2)
+# with col1:
+#     # Criar caixa de seleção de Ano
+#     years = sorted(df_data["ano_campeonato"].value_counts().index, reverse=True)
+#     year = st.selectbox("Ano", years)
+# with col2:
+#    # Criar caixa de seleção de Clubes
+#     clubs = df_data[df_data["ano_campeonato"] == year]
+#     clubs = sorted(clubs["time_man"].value_counts().index)
+#     club = st.selectbox("Clube", clubs)
 
 
 ################## Buscar escudo do clube ##################
@@ -108,6 +122,84 @@ def get_club_logo(club):
     }
     return logo_mapping.get(club, "")
 ################## alterar nomes para pesquisas nos dados do Kaggle ##################
+
+
+def get_club_masc(club):
+    logo_mapping = {
+        'América-MG': "http://acervodocoelho.com.br/wp-content/uploads/2015/02/COELHAOOOOO.jpg",
+        "America-MG":"http://acervodocoelho.com.br/wp-content/uploads/2015/02/COELHAOOOOO.jpg",
+        'América-RN': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8tqVZPG9gO0UfawuANF2_jYCTBPNFNQl-Id77_TUm&s",
+        'Athletico-PR': "https://static.wixstatic.com/media/5cfd0b_05f186beba0f4018b2fea735d67454a9~mv2.png/v1/fill/w_566,h_797,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/5cfd0b_05f186beba0f4018b2fea735d67454a9~mv2.png",
+        'Atlético-PR': "https://static.wixstatic.com/media/5cfd0b_05f186beba0f4018b2fea735d67454a9~mv2.png/v1/fill/w_566,h_797,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/5cfd0b_05f186beba0f4018b2fea735d67454a9~mv2.png",
+        'Atletico-PR':"https://static.wixstatic.com/media/5cfd0b_05f186beba0f4018b2fea735d67454a9~mv2.png/v1/fill/w_566,h_797,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/5cfd0b_05f186beba0f4018b2fea735d67454a9~mv2.png", 
+        'Atlético-GO': "http://2.bp.blogspot.com/-VGEzrdXjxes/T3Wor-1tG0I/AAAAAAAACv8/DJW2hKd7YXY/s1600/mascote+new.JPG",
+        "Atletico-GO":"http://2.bp.blogspot.com/-VGEzrdXjxes/T3Wor-1tG0I/AAAAAAAACv8/DJW2hKd7YXY/s1600/mascote+new.JPG",
+        "Atletico-MG":"https://image-service.onefootball.com/transform?w=840&h=630&dpr=2&image=https%3A%2F%2Fmercadodofutebol.com%2Fwp-content%2Fuploads%2F2023%2F07%2F52819054337_b1c95bd988_c-2.jpg",
+        'Atlético-MG': "https://image-service.onefootball.com/transform?w=840&h=630&dpr=2&image=https%3A%2F%2Fmercadodofutebol.com%2Fwp-content%2Fuploads%2F2023%2F07%2F52819054337_b1c95bd988_c-2.jpg",
+        'Avaí FC': "https://static.wixstatic.com/media/5cfd0b_0cd86a5268ff4283babf581b2745967a~mv2.png/v1/fill/w_566,h_797,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/5cfd0b_0cd86a5268ff4283babf581b2745967a~mv2.png",
+        "Avai":"https://static.wixstatic.com/media/5cfd0b_0cd86a5268ff4283babf581b2745967a~mv2.png/v1/fill/w_566,h_797,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/5cfd0b_0cd86a5268ff4283babf581b2745967a~mv2.png",
+        'Barueri': "https://www.campeoesdofutebol.com.br/distintivos/gremio_barueri_mascote_2015.jpg",
+        'Botafogo': "https://s2-ge.glbimg.com/jT0ZNSNGlED1jqSj0HqwHYu9utw=/0x0:1024x808/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2022/v/j/ZCbkWvSJeiRBh6AfON0g/biriba.jpg",
+        "Botafogo-RJ": "https://s2-ge.glbimg.com/jT0ZNSNGlED1jqSj0HqwHYu9utw=/0x0:1024x808/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2022/v/j/ZCbkWvSJeiRBh6AfON0g/biriba.jpg",
+        'Brasiliense-DF': "https://www.brasiliensefc.com.br/wp-content/uploads/2019/08/mascote_bse.png",
+        'CSA': "https://omunicipio.com.br/wp-content/uploads/2021/05/confianca-se-serie-b-2021-especial-csa-mini.png",
+        'Ceará SC': "https://www.cearasc.com/media/img/noticias/vovo_O4hxCD9.jpg",
+        "Ceara": "https://www.cearasc.com/media/img/noticias/vovo_O4hxCD9.jpg",
+        'Chapecoense': "https://chapecoense.com/wp-content/uploads/2022/07/indio-mascote.jpg",
+        'Corinthians': "https://amascoteria.com.br/wp-content/uploads/2017/05/Mascote_3d_Corinthians_A-768x768.jpg",
+        "Coritiba": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEibmTOlwzbJn1TO1gH4yt342vy1LHF0wLPrIpGw_KGspqVk5da-HmAcXSDUB61l_wOOS4RV4ZuWgewEAzSp-i876lfgBKHTWlgJf8GCGSrDr0rX5SJ9r6jXjdrVKIfM2_Hs6gfeP7ypC8cCOG7N0Ie0WLp8wKeU7jXUPuTog4geQgQWXJzOHludQwAgGA/s16000/mascote_do_coritiba.jpg",       
+        'Coritiba FC': "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEibmTOlwzbJn1TO1gH4yt342vy1LHF0wLPrIpGw_KGspqVk5da-HmAcXSDUB61l_wOOS4RV4ZuWgewEAzSp-i876lfgBKHTWlgJf8GCGSrDr0rX5SJ9r6jXjdrVKIfM2_Hs6gfeP7ypC8cCOG7N0Ie0WLp8wKeU7jXUPuTog4geQgQWXJzOHludQwAgGA/s426/mascote_do_coritiba.jpg",
+        # 'Criciúma EC': "-5.png",
+        # 'Criciuma': "-5.png",
+        # 'Cruzeiro': "-256.png",
+        # 'Cuiabá-MT': ".png",
+        # "Cuiaba": ".png", 
+        # "EC Bahia": "ng",
+        # "Bahia": "ng",
+        # "Vitoria": "56.png",       
+        # 'EC Vitória': "56.png",
+        # 'Figueirense FC': "irense-256.png",
+        # "Figueirense":"irense-256.png",    
+        # 'Flamengo': "-256.png",
+        # 'Fluminense': "ense-256.png",
+        # 'Fortaleza': "za-256.png",
+        # 'Goiás': "te-clube-4096.png",
+        # 'Goiás EC': "te-clube-4096.png",
+        # 'Goias': "te-clube-4096.png",  
+        # 'Grêmio': ".png",
+        # 'Gremio': ".png",
+        # 'Guarani': "56.png",
+        # 'Internacional': "ernacional-256.png",
+        # 'Ipatinga FC': "
+        # 'Joinville-SC': "x-Joinville_Esporte_Clube_logo.svg.png",
+        # 'Juventude': "de-256.png",
+        # 'Náutico': "56.png",
+        # "Nautico": "56.png",
+        # 'Palmeiras': "as-256.png",
+        # 'Paraná': ".png",
+        # "Parana": ".png",
+        # "Paysandu":"-5.png",
+        # 'Paysandu SC': "-5.png",
+        # "Paysandu": "-5.png",
+        # 'Ponte Preta': "-preta-256.png",
+        # 'Portuguesa': "guesa-de-futebol-4096.png",
+        # 'RB Bragantino': "go-red-bull-bragantino-256.png",
+        # "Bragantino": "go-red-bull-bragantino-256.png",
+        # 'Santa Cruz': "cruz-256.png",
+        # 'Santo André': "-andre-256.png",
+        # "Santo Andre":"-andre-256.png",
+        # 'Santos': ".png  ",
+        # 'Santos FC': ".png  ",
+        # 'Sport Recife': "b_Recife.svg.png",
+        # "Sport":"b_Recife.svg.png",
+        # 'São Caetano': "aetano-256.png",
+        # "Sao Caetano":"aetano-256.png",
+        # 'São Paulo': "lo-256.png",
+        # 'Sao Paulo':"lo-256.png",
+        # 'Vasco da Gama': "co-da-gama-256.png",
+        # 'Vasco': "co-da-gama-256.png",
+    }
+    return logo_mapping.get(club, "")
 
 
 def get_club_name(club):
@@ -341,7 +433,7 @@ logo = get_club_logo(club)
 colorLine = get_club_color(club)
 clubGols = get_club_name(club)
 table = create_match_table(df_data, year, club)
-
+masc = get_club_masc(club)
 
 # Calcular número de rodadas do campeonato
 df_year = df_data[df_data["ano_campeonato"] == year]
@@ -590,6 +682,10 @@ def plot_evolucao_posicao(df_data, club, year, colorLine):
             row['posicao']), ha='center', va='bottom', fontsize=8)
     # Remover bordas do gráfico
     plt.axis('off')
+    # plt.plot( '--', label='Linha Tracejada')
+
+# Adicionar uma legenda ao gráfico
+    plt.legend()
     plt.grid(True)  
     
     return plt
@@ -607,6 +703,9 @@ with col1:
 with col2:
     st.title(f"{club}")
 
+# with col3:
+#     st.image(masc, width=130)
+
 col1, col2, col3 = st.columns(3)
 try:
     with col1:
@@ -617,9 +716,6 @@ except:
 
 with col2:
     st.markdown(f"**Brasileirão** {year}")
-
-
-
 
 
 ######### Colunas de vitórias, Empates e derrotas  ##################
