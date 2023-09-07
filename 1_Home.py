@@ -38,19 +38,6 @@ st.sidebar.markdown('''
 - [Github](https://github.com/Doug-13)
 ''', unsafe_allow_html=True)
 
-col1, col2, col3 = st.columns(3)    
-with col1:
-    st.image('https://media.licdn.com/dms/image/D4D03AQHfCsdexLdO0A/profile-displayphoto-shrink_100_100/0/1682550966648?e=1698883200&v=beta&t=vy3Qm5QmRQIh-Llg2EE6vm4ouRJMr-24VoJ18zi5jg8', width=140)
-with col2:
-    st.header('Sobre mim')
-st.write('''
-Olá, feliz por você estar aqui conhecendo este projeto, meu nome é Douglas, sou apaixonado por programação e análise de dados, 
-        sou inquieto e sempre procurando aprender algo novo, gostou? Mande dicas para aperfeiçoarmos este trabalho! ''')
-st.write('''Este é meu primeiro trabalho em streamlit e python, e muitas coisas fui aprendendo ao longo da criação.''')
-st.write('''Me segue lá no [Linkedin](https://www.linkedin.com/in/douglas-mello-13b70012a/), e me fala o que achou do projeto, ainda está um pouco bagunçado, mas vai melhorar...''')
-st.write(''' Ahhhhh e divulga aí, me ajuda a fazer com que este projeto chegue mais longe!!''')
-
-st.divider()
 
 st.header('**Dados Campeonato Brasileiro**')
 st.write('''
@@ -61,3 +48,7 @@ st.write("Pode ser que alguns dados apresentem divergências, isto porque as pla
 st.write("Acesse a base dos dados clicando neste [link](https://basedosdados.org/dataset/c861330e-bca2-474d-9073-bc70744a1b23?table=18835b0d-233e-4857-b454-1fa34a81b4fa)")
 
 st.write('Acesse os dados do Kaggle clicando neste [link](https://www.kaggle.com/datasets/adaoduque/campeonato-brasileiro-de-futebol)')
+
+st.write('Aqui vou trazer estatísticas e dados do campeonato brasileiro, a ideia é que com o tempo consiga buscar informações perdidas no tempo para alimentar as planilhas e tenhamos um trabalho mais completo.')
+
+st.write('Acesse a barra lateral na setinha acima " > " e confira tudo o que já está sendo realizado.')

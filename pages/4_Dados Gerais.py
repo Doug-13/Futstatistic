@@ -149,13 +149,97 @@ all_clubs = sorted(pd.concat([
     df_table_positions['Quinto-Lugar']
 ]).unique())
 
+
+st.markdown("<h3 style='text-align: center;'>5 Primeiros colocados de todos os campeonatos</h3>", unsafe_allow_html=True)
+
+
 # Caixa de seleção para escolher o clube
-selected_club = st.selectbox("Selecione um clube:", all_clubs)
+selected_club = st.selectbox("Selecione um clube para destacá-lo na tabela:", all_clubs)
 
 # Definir um DataFrame estilizado com formatação condicional
 styled_df = df_table_positions.style.applymap(lambda club: highlight_club(club, selected_club), subset=df_table_positions.columns[1:])
 
 # Exibir o DataFrame estilizado no Streamlit
+
+def get_club_logo(club_man):
+    logo_mapping = {
+        'América-MG': "https://logodetimes.com/times/america-mineiro/logo-america-mineiro-256.png",
+        "America-MG":"https://logodetimes.com/times/america-mineiro/logo-america-mineiro-256.png",
+        'América-RN': "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/AmericaFC-RN.svg/180px-AmericaFC-RN.svg.png",
+        'Athletico-PR': "https://logodetimes.com/times/atletico-paranaense/logo-atletico-paranaense-256.png",
+        'Atlético-PR': "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/CA_Paranaense.svg/250px-CA_Paranaense.svg.png",
+        'Athletico-PR':"https://logodetimes.com/times/atletico-paranaense/logo-atletico-paranaense-256.png",
+        'Atletico-PR':"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/CA_Paranaense.svg/250px-CA_Paranaense.svg.png", 
+        'Atlético-GO': "https://logodetimes.com/times/atletico-goianiense/logo-atletico-goianiense-com-estrela-256.png",
+        "Atletico-GO":"https://logodetimes.com/times/atletico-goianiense/logo-atletico-goianiense-com-estrela-256.png",
+        "Atletico-MG":"https://logodetimes.com/times/atletico-mineiro/logo-atletico-mineiro-256.png",
+        'Atlético-MG': "https://logodetimes.com/times/atletico-mineiro/logo-atletico-mineiro-256.png",
+        'Avaí FC': "https://logodetimes.com/times/avai/logo-avai-256.png",
+        "Avai":"https://logodetimes.com/times/avai/logo-avai-256.png",
+        'Barueri': "https://upload.wikimedia.org/wikipedia/pt/thumb/a/af/Gr%C3%AAmio_Barueri.png/120px-Gr%C3%AAmio_Barueri.png",
+        'Botafogo': "https://logodetimes.com/times/botafogo/logo-botafogo-256.png",
+        "Botafogo-RJ": "https://logodetimes.com/times/botafogo/logo-botafogo-256.png",
+        'Brasiliense-DF': "https://seeklogo.com/images/B/Brasiliense_Futebol_Clube-DF-logo-24AEB16A54-seeklogo.com.png",
+        'Brasiliense': "https://seeklogo.com/images/B/Brasiliense_Futebol_Clube-DF-logo-24AEB16A54-seeklogo.com.png",
+        'CSA': "https://logodetimes.com/times/csa/logo-csa-256.png",
+        'Ceará SC': "https://logodetimes.com/times/ceara/logo-ceara-256.png",
+        "Ceara": "https://logodetimes.com/times/ceara/logo-ceara-256.png",
+        'Chapecoense': "https://logodetimes.com/times/chapecoense/logo-chapecoense-256.png",
+        'Corinthians': "https://logodetimes.com/times/corinthians/logo-corinthians-256.png",
+        "Coritiba": "https://logodetimes.com/times/coritiba/logo-coritiba-256.png",       
+        'Coritiba FC': "https://logodetimes.com/times/coritiba/logo-coritiba-256.png",
+        'Criciúma EC': "https://logodetimes.com/times/criciuma/logo-criciuma-5.png",
+        'Criciuma': "https://logodetimes.com/times/criciuma/logo-criciuma-5.png",
+        'Cruzeiro': "https://logodetimes.com/times/cruzeiro/logo-cruzeiro-256.png",
+        'Cuiabá-MT': "https://logodetimes.com/times/cuiaba/logo-cuiaba-256.png",
+        "Cuiaba": "https://logodetimes.com/times/cuiaba/logo-cuiaba-256.png", 
+        "EC Bahia": "https://logodetimes.com/times/bahia/logo-bahia-256.png",
+        "Bahia": "https://logodetimes.com/times/bahia/logo-bahia-256.png",
+        "Vitoria": "https://logodetimes.com/times/vitoria/logo-vitoria-256.png",       
+        'EC Vitória': "https://logodetimes.com/times/vitoria/logo-vitoria-256.png",
+        'Figueirense FC': "https://logodetimes.com/times/figueirense/logo-figueirense-256.png",
+        "Figueirense":"https://logodetimes.com/times/figueirense/logo-figueirense-256.png",    
+        'Flamengo': "https://logodetimes.com/times/flamengo/logo-flamengo-256.png",
+        'Fluminense': "https://logodetimes.com/times/fluminense/logo-fluminense-256.png",
+        'Fortaleza': "https://logodetimes.com/times/fortaleza/logo-fortaleza-256.png",
+        'Goiás': "https://logodetimes.com/times/goias/logo-goias-esporte-clube-4096.png",
+        'Goiás EC': "https://logodetimes.com/times/goias/logo-goias-esporte-clube-4096.png",
+        'Goias': "https://logodetimes.com/times/goias/logo-goias-esporte-clube-4096.png",  
+        'Grêmio': "https://logodetimes.com/times/gremio/logo-gremio-256.png",
+        'Gremio': "https://logodetimes.com/times/gremio/logo-gremio-256.png",
+        'Guarani': "https://logodetimes.com/times/guarani/logo-guarani-256.png",
+        'Internacional': "https://logodetimes.com/times/internacional/logo-internacional-256.png",
+        'Ipatinga FC': "https://upload.wikimedia.org/wikipedia/pt/thumb/9/95/IpatingaFC.png/120px-IpatingaFC.png",
+        'Joinville-SC': "https://upload.wikimedia.org/wikipedia/en/thumb/1/14/Joinville_Esporte_Clube_logo.svg/150px-Joinville_Esporte_Clube_logo.svg.png",
+        'Juventude': "https://logodetimes.com/times/juventude/logo-juventude-256.png",
+        'Náutico': "https://logodetimes.com/times/nautico/logo-nautico-256.png",
+        "Nautico": "https://logodetimes.com/times/nautico/logo-nautico-256.png",
+        'Palmeiras': "https://logodetimes.com/times/palmeiras/logo-palmeiras-256.png",
+        'Paraná': "https://logodetimes.com/times/parana/logo-parana-256.png",
+        "Parana": "https://logodetimes.com/times/parana/logo-parana-256.png",
+        "Paysandu":"https://logodetimes.com/times/paysandu/logo-paysandu-5.png",
+        'Paysandu SC': "https://logodetimes.com/times/paysandu/logo-paysandu-5.png",
+        "Paysandu": "https://logodetimes.com/times/paysandu/logo-paysandu-5.png",
+        'Ponte Preta': "https://logodetimes.com/times/ponte-preta/logo-ponte-preta-256.png",
+        'Portuguesa': "https://logodownload.org/wp-content/uploads/2019/09/portuguesa-sp-logo-5.png",
+        'RB Bragantino': "https://logodetimes.com/times/red-bull-bragantino/logo-red-bull-bragantino-256.png",
+        "Bragantino": "https://logodetimes.com/times/red-bull-bragantino/logo-red-bull-bragantino-256.png",
+        'Santa Cruz': "https://logodetimes.com/times/santa-cruz/logo-santa-cruz-256.png",
+        'Santo André': "https://logodetimes.com/times/santo-andre/logo-santo-andre-256.png",
+        "Santo Andre":"https://logodetimes.com/times/santo-andre/logo-santo-andre-256.png",
+        'Santos': "https://logodetimes.com/times/santos/logo-santos-256.png  ",
+        'Santos FC': "https://logodetimes.com/times/santos/logo-santos-256.png  ",
+        'Sport Recife': "https://upload.wikimedia.org/wikipedia/en/thumb/4/45/Sport_Club_Recife.svg/170px-Sport_Club_Recife.svg.png",
+        "Sport":"https://upload.wikimedia.org/wikipedia/en/thumb/4/45/Sport_Club_Recife.svg/170px-Sport_Club_Recife.svg.png",
+        'São Caetano': "https://logodetimes.com/times/sao-caetano/logo-sao-caetano-256.png",
+        "Sao Caetano":"https://logodetimes.com/times/sao-caetano/logo-sao-caetano-256.png",
+        'São Paulo': "https://logodetimes.com/times/sao-paulo/logo-sao-paulo-256.png",
+        'Sao Paulo':"https://logodetimes.com/times/sao-paulo/logo-sao-paulo-256.png",
+        'Vasco da Gama': "https://logodetimes.com/times/vasco-da-gama/logo-vasco-da-gama-256.png",
+        'Vasco': "https://logodetimes.com/times/vasco-da-gama/logo-vasco-da-gama-256.png",
+    }
+    return logo_mapping.get(club_man, "")
+
 
 # Função para destacar o clube selecionado
 def highlight_club(club, selected_club):
@@ -191,9 +275,8 @@ st.dataframe(styled_df, height=740, width=900, hide_index=True)
 
 
 def df_table_games(df_data):    
-    # Cria um DataFrame vazio com as colunas desejadas
-    df_table_games = pd.DataFrame(columns=[
-        "Clube", "Pontos", "Vitórias", "Empates", "Derrotas", "Gols Marcados", "Gols Sofridos", "Saldo"])
+    # Lista para armazenar os dados de cada clube
+    club_data_list = []
 
     # Agrupa os dados pelo clube mandante
     club_man_data = df_data.groupby("time_man")
@@ -218,34 +301,117 @@ def df_table_games(df_data):
         
         total_gols_man = club_man_matches["gols_man"].sum() + club_vis_matches["gols_vis"].sum()
         total_gols_vis = club_man_matches["gols_vis"].sum() + club_vis_matches["gols_man"].sum()
-        total_gols_sofridos = total_gols_man - total_gols_vis
-        saldo = total_gols_man - total_gols_sofridos
+       
+        saldo = total_gols_man - total_gols_vis
         
         pontos = (victories * 3) + empates  # Calcula os pontos
         
-        # Adiciona os dados à tabela
-        df_table_games = df_table_games.append({"Clube": club, "Pontos": str(int(pontos)), "Vitórias": victories, "Empates": empates, "Derrotas": derrotas, "Gols Marcados": total_gols_man,
-                                                "Gols Sofridos": total_gols_sofridos, "Saldo": saldo}, ignore_index=True)
-        df_table_games['Pontos'] = df_table_games['Pontos'].str.replace(',', '.', regex=True)
-    
+        aprov = round((pontos * 100) / ((victories + empates + derrotas) * 3), 2)
+
+        # Aplica a função get_club_logo para obter o logotipo do clube
+        logo_man = df_data[df_data["time_man"] == club]["time_man"].apply(get_club_logo).values[0]
+
+        # Adiciona os dados à lista
+        club_data_list.append({"Escudo": logo_man, "Clube": club, "Pontos": pontos, "Vitórias": victories, "Empates": empates, "Derrotas": derrotas, "Gols Marc.": str(int(total_gols_man)),
+                                                "Gols Sof.": str(int(total_gols_vis)), "Saldo": saldo,"Aproveit.%":aprov})
+
+    # Cria o DataFrame a partir da lista de dicionários
+    df_table_games = pd.DataFrame(club_data_list)
+
     # Ordena o DataFrame por pontos de forma decrescente
     df_table_games = df_table_games.sort_values(by=["Pontos", "Vitórias", "Saldo"], ascending=[False, False, False])
     # Adiciona a coluna de sequência numérica
-    df_table_games.insert(0, "Sequência", range(1, len(df_table_games) + 1))
-    df_table_games['Pontos'] = df_table_games['Pontos'].str.replace(',', '.', regex=True)
+    df_table_games.insert(0, "Pos", range(1, len(df_table_games) + 1))
 
     return df_table_games
+
 # Chama a função para criar a tabela
 resulting_table_games = df_table_games(df_data)
 
-st.dataframe(resulting_table_games,
-                     column_config={"Ranking Brasileirão": st.column_config.ProgressColumn(
-                         "Pontos",
+st.markdown("<h3 style='text-align: center;'>Ranking Brasileirão</h3>", unsafe_allow_html=True)
+
+st.dataframe(resulting_table_games, height=800, width=800, hide_index=True, 
+             column_config={
+                 "Escudo": st.column_config.ImageColumn(),
+                 "Pontos": st.column_config.ProgressColumn(
+                     "Pontos",
+                     help="Total de Pontos em todos os campeonatos",
+                     format="%d",
+                     min_value=0,
+                     max_value=int(resulting_table_games['Pontos'].max())
+                 ),
+             })
+
+#################  Contagem de gols por ano #################
+
+jogadores_contagem = {}
+
+# Iterar pelas linhas do DataFrame filtrado
+for index, row in df_brasGols.iterrows():
+    atleta = row['atleta']
+
+    if pd.notnull(atleta):
+        if atleta in jogadores_contagem:
+            jogadores_contagem[atleta] += 1
+        else:
+            jogadores_contagem[atleta] = 1
+
+jogadores_contagem_ordenada = dict(
+    sorted(jogadores_contagem.items(), key=lambda item: item[1], reverse=True))
+
+# Criar um DataFrame a partir do dicionário ordenado
+df_contagem_ordenada = pd.DataFrame(
+    jogadores_contagem_ordenada.items(), columns=['Atleta', 'Gols'])
+
+
+
+#################  Contagem de cartões por ano #################
+
+jogadores_contagem = {}
+
+# Iterar pelas linhas do DataFrame filtrado
+for index, row in df_brasCards.iterrows():
+    atleta = row['atleta']
+
+    if pd.notnull(atleta):
+        if atleta in jogadores_contagem:
+            jogadores_contagem[atleta] += 1
+        else:
+            jogadores_contagem[atleta] = 1
+
+jogadores_contagem_ordenada = dict(
+    sorted(jogadores_contagem.items(), key=lambda item: item[1], reverse=True))
+
+# Criar um DataFrame a partir do dicionário ordenado
+df_contagem_Card_ordenada = pd.DataFrame(
+    jogadores_contagem_ordenada.items(), columns=['Atleta', 'Cartoes'])
+
+
+
+col1, col2 = st.columns(2)
+with col1:
+    st.write(f"**Artilheiros do Campeonato entre 2014 e 20222**")
+    st.dataframe(df_contagem_ordenada,
+                    column_config={"Gols": st.column_config.ProgressColumn(
+                        "Gols marcados",
+                        help="Número de Gols marcados por jogador",
+                        format="%d",
+                        min_value=0,
+                        max_value=int(df_contagem_ordenada['Gols'].max())
+                    ),
+                    }, height=300, width=400,
+                    hide_index=True)
+
+with col2:
+        st.markdown(f"**Recordistas Cartões** ")
+        st.dataframe(df_contagem_Card_ordenada,
+                     column_config={"Cartoes": st.column_config.ProgressColumn(
+                         "Cartões Recebidos",
                          help="Número de cartões recebidos por jogador",
                          format="%d",
                          min_value=0,
                          max_value=int(
-                             resulting_table_games  ['Pontos'].max())
+                             df_contagem_Card_ordenada['Cartoes'].max())
                      ),
-                     }, height=800, width=800,
+                     }, height=300, width=400,
                      hide_index=True)

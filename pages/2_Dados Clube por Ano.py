@@ -62,7 +62,7 @@ def get_club_logo(club):
         'Barueri': "https://upload.wikimedia.org/wikipedia/pt/thumb/a/af/Gr%C3%AAmio_Barueri.png/120px-Gr%C3%AAmio_Barueri.png",
         'Botafogo': "https://logodetimes.com/times/botafogo/logo-botafogo-256.png",
         "Botafogo-RJ": "https://logodetimes.com/times/botafogo/logo-botafogo-256.png",
-        'Brasiliense-DF': "https://upload.wikimedia.org/wikipedia/pt/thumb/3/3a/Brasiliense_Futebol_Clube.png/120px-Brasiliense_Futebol_Clube.png",
+        'Brasiliense-DF': "https://seeklogo.com/images/B/Brasiliense_Futebol_Clube-DF-logo-24AEB16A54-seeklogo.com.png",
         'CSA': "https://logodetimes.com/times/csa/logo-csa-256.png",
         'Ceará SC': "https://logodetimes.com/times/ceara/logo-ceara-256.png",
         "Ceara": "https://logodetimes.com/times/ceara/logo-ceara-256.png",
@@ -103,7 +103,7 @@ def get_club_logo(club):
         'Paysandu SC': "https://logodetimes.com/times/paysandu/logo-paysandu-5.png",
         "Paysandu": "https://logodetimes.com/times/paysandu/logo-paysandu-5.png",
         'Ponte Preta': "https://logodetimes.com/times/ponte-preta/logo-ponte-preta-256.png",
-        'Portuguesa': "https://logodetimes.com/times/portugal/selecao-portuguesa-de-futebol-4096.png",
+        'Portuguesa': "https://logodownload.org/wp-content/uploads/2019/09/portuguesa-sp-logo-5.png",
         'RB Bragantino': "https://logodetimes.com/times/red-bull-bragantino/logo-red-bull-bragantino-256.png",
         "Bragantino": "https://logodetimes.com/times/red-bull-bragantino/logo-red-bull-bragantino-256.png",
         'Santa Cruz': "https://logodetimes.com/times/santa-cruz/logo-santa-cruz-256.png",
@@ -420,8 +420,7 @@ def create_match_table(df_data, year, club):
         df_tabela.loc[:,"publico"] = df_tabela["publico"].astype(int).astype(str)
 
         # Select and rename columns for the final table
-        df_tab = df_tabela[["data", "rodada",
-                            "Logo_man", "Placar", "Logo_vis", "publico"]]
+        df_tab = df_tabela[["data", "rodada", "Logo_man", "Placar", "Logo_vis", "publico"]]
         
         df_tab.rename(columns={"data": "Data do Jogo", "rodada": "Rodada", "Logo_man": "Escudo Mandante", "Logo_vis": "Escudo Visitante", "publico": "Público"}, inplace=True)
     

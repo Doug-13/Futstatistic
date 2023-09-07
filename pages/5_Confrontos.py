@@ -104,7 +104,8 @@ def get_club_logo(club_man):
 
 
 # Criar caixa de seleção de Ano
-st.title("Saiba mais sobre os confrontos entre:")
+
+st.markdown("<h3 style='text-align: center;'>Saiba mais sobre os confrontos entre:</h3>", unsafe_allow_html=True)
 
 col1, col2, col3 = st.columns(3)
 with col1:
@@ -148,31 +149,31 @@ tot_games = draws+ vict_man_man + vict_vis_vis
 
 col1, col2, col3 = st.columns(3)
 with col1:
-    st.markdown(f"**Total de Jogos:** {tot_games}")
+    st.warning(f"**Total de Jogos:** {tot_games}")
 
 
 
 col1, col2, col3 = st.columns(3)
 with col1:
-    st.markdown(f"**Vitórias:** {vict_man_man}")
+    st.success(f"**Vitórias:** {vict_man_man}")
 with col2:
-    st.markdown(f"<h6 style='text-align: center;'>Empates:{draws}</h6>", unsafe_allow_html=True)
+   st.info(f"**Empates:** {draws}")
 with col3:
-    st.markdown(f'**Vitórias:** {vict_vis_vis}')
+    st.success(f'**Vitórias:** {vict_vis_vis}')
 
 col1, col2, col3 = st.columns(3)
 with col1:
-    st.markdown(f"**Vitórias em casa:** {vic_man}")
+    st.success(f"**Vitórias em casa:** {vic_man}")
 
 with col3:
-    st.markdown(f'**Vitórias em casa:** {vic_vis_vis}')
+   st.success(f'**Vitórias em casa:** {vic_vis_vis}')
 
 col1, col2, col3 = st.columns(3)
 with col1:
-    st.markdown(f"**Vitórias fora:** {vic_vis}")
+    st.success(f"**Vitórias fora:** {vic_vis}")
 
 with col3:
-    st.markdown(f'**Vitórias fora:** {vic_man_vis}')
+    st.success(f'**Vitórias fora:** {vic_man_vis}')
 
 df_confr = pd.merge(club_man_filtered, club_vis_filtered, how = 'outer')
 df_clone=df_confr[:] 
@@ -211,3 +212,5 @@ st.dataframe(df_tab,
 
 
 st.divider()
+
+
