@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.pyplot as plt
 import pandas as pd
 
-st.sidebar.markdown("Desenvolvido por [Douglas Mello ](https://www.linkedin.com/in/douglas-mello-13b70012a/)")
+
 
 st.set_page_config(
     page_title="Estatísticas",
@@ -16,6 +16,7 @@ df_brasGols = st.session_state["dataBrasGols"]
 df_brasFul = st.session_state["dataBrasFull"]
 df_brasCards = st.session_state["dataBrasCards"]
 
+st.sidebar.markdown("Desenvolvido por [Douglas Mello ](https://www.linkedin.com/in/douglas-mello-13b70012a/)")
 
 col1, col2 = st.columns(2)
 with col1:

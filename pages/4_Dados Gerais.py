@@ -1,7 +1,7 @@
 import streamlit as st
 import matplotlib.pyplot as plt
 import pandas as pd
-st.sidebar.markdown("Desenvolvido por [Douglas Mello ](https://www.linkedin.com/in/douglas-mello-13b70012a/)")
+
 
 st.set_page_config(
     page_title="Estatísticas",
@@ -13,6 +13,24 @@ df_brasGols = st.session_state["dataBrasGols"]
 df_brasFul = st.session_state["dataBrasFull"]
 df_brasCards = st.session_state["dataBrasCards"]
 df_brasPosition = st.session_state["df_brasPosition"]
+
+
+
+st.sidebar.title("Dados Gerais")
+st.sidebar.markdown("Ainda nesta página!")
+st.sidebar.write("- Ranking Brasileiro!")
+st.sidebar.write("- Ranking artilheiros!")
+st.sidebar.write("- Ranking Cartões!")
+st.sidebar.markdown("<h1 style='text-align: center;'></h1><br><br>", unsafe_allow_html=True)
+
+st.sidebar.markdown("Desenvolvido por [Douglas Mello ](https://www.linkedin.com/in/douglas-mello-13b70012a/)")
+# st.sidebar.markdown('''
+# # Atalhos
+# - [Início da Página](#section-1)
+# - [Ranking do Brasileirão](#section-2)
+# - [Artilheiros do Campeonato entre 2014 e 20222](#section-3)
+# ''', unsafe_allow_html=True)
+
 
 
 # Criar caixa de seleção de Ano
@@ -327,8 +345,10 @@ def df_table_games(df_data):
 
 # Chama a função para criar a tabela
 resulting_table_games = df_table_games(df_data)
+# st.header("Ranking do Brasileirão")
 
-st.markdown("<h3 style='text-align: center;'>Ranking Brasileirão</h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center;'>Ranking brasileirão</h3>", unsafe_allow_html=True)
+
 
 st.dataframe(resulting_table_games, height=800, width=800, hide_index=True, 
              column_config={
@@ -390,7 +410,7 @@ df_contagem_Card_ordenada = pd.DataFrame(
 
 col1, col2 = st.columns(2)
 with col1:
-    st.write(f"**Artilheiros do Campeonato entre 2014 e 20222**")
+    st.markdown("**Ranking Artilheiros**")
     st.dataframe(df_contagem_ordenada,
                     column_config={"Gols": st.column_config.ProgressColumn(
                         "Gols marcados",
@@ -403,7 +423,7 @@ with col1:
                     hide_index=True)
 
 with col2:
-        st.markdown(f"**Recordistas Cartões** ")
+        st.markdown(f"**Ranking Cartões** ")
         st.dataframe(df_contagem_Card_ordenada,
                      column_config={"Cartoes": st.column_config.ProgressColumn(
                          "Cartões Recebidos",

@@ -43,7 +43,7 @@ with col2:
 st.write('''
 Este projeto foi criado utilizando as bases de dados disponíveis nos sites Base dos Dados e no kaggle, foi construído em Python utilizando bibliotecas Pandas, Streamlit e Numpy.
 ''')
-st.write("Pode ser que alguns dados apresentem divergências, isto porque as planilhas que estão sendo utilizadas, estão com muitos dados faltantes, mas se achou alguma coisa, chama no linkedin e me informe as falhas para que possamos construir algo bem interessante")
+st.write("Pode ser que alguns dados apresentem divergências, isto porque as planilhas que estão sendo utilizadas estão com muitos dados faltantes, mas se achou alguma coisa, chama no linkedin e me informe as falhas para que possamos construir algo bem interessante")
 
 st.write("Acesse a base dos dados clicando neste [link](https://basedosdados.org/dataset/c861330e-bca2-474d-9073-bc70744a1b23?table=18835b0d-233e-4857-b454-1fa34a81b4fa)")
 

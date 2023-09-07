@@ -2,7 +2,7 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import pandas as pd
 
-st.sidebar.markdown("Desenvolvido por [Douglas Mello ](https://www.linkedin.com/in/douglas-mello-13b70012a/)")
+
 
 st.set_page_config(
     page_title="Estatísticas",
@@ -14,6 +14,8 @@ df_brasGols = st.session_state["dataBrasGols"]
 df_brasFul = st.session_state["dataBrasFull"]
 df_brasCards = st.session_state["dataBrasCards"]
 df_brasPosition = st.session_state["df_brasPosition"]
+
+st.sidebar.markdown("Desenvolvido por [Douglas Mello ](https://www.linkedin.com/in/douglas-mello-13b70012a/)")
 
 logo = "https://upload.wikimedia.org/wikipedia/pt/thumb/4/42/Campeonato_Brasileiro_S%C3%A9rie_A_logo.png/109px-Campeonato_Brasileiro_S%C3%A9rie_A_logo.png?20160723160542"
 col1, col2, col3 = st.columns(3)
