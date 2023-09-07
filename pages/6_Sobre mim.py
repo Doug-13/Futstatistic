@@ -1,4 +1,11 @@
 import streamlit as st
+st.sidebar.markdown("Desenvolvido por [Douglas Mello ](https://www.linkedin.com/in/douglas-mello-13b70012a/)")
+
+st.sidebar.markdown('''
+
+- [Linkedin](https://www.linkedin.com/in/douglas-mello-13b70012a/)
+- [Github](https://github.com/Doug-13)
+''', unsafe_allow_html=True)    
 
 col1, col2, col3 = st.columns(3)    
 with col1:

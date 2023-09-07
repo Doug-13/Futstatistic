@@ -32,14 +32,14 @@ if "data" not in st.session_state:
     df_brasPosition = pd.read_csv('pages/pirmeiros_colocados.csv')
     st.session_state["df_brasPosition"] = df_brasPosition
 
-st.sidebar.markdown('''
-# Me siga lá!!
-- [Linkedin](https://www.linkedin.com/in/douglas-mello-13b70012a/)
-- [Github](https://github.com/Doug-13)
-''', unsafe_allow_html=True)
+st.sidebar.markdown("Desenvolvido por [Douglas Mello ](https://www.linkedin.com/in/douglas-mello-13b70012a/)")
 
-
-st.header('**Dados Campeonato Brasileiro**')
+logo = "https://upload.wikimedia.org/wikipedia/pt/thumb/4/42/Campeonato_Brasileiro_S%C3%A9rie_A_logo.png/109px-Campeonato_Brasileiro_S%C3%A9rie_A_logo.png?20160723160542"
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.image(logo, width=90)
+with col2:
+    st.markdown("<h1 style='text-align: center;'>Campeonato Brasileiro</h1>", unsafe_allow_html=True)
 st.write('''
 Este projeto foi criado utilizando as bases de dados disponíveis nos sites Base dos Dados e no kaggle, foi construído em Python utilizando bibliotecas Pandas, Streamlit e Numpy.
 ''')
